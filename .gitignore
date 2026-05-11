@@ -1,0 +1,20 @@
+node_modules
+extension.js
+*.js.map
+
+# Package VS Code
+*.vsix
+
+# Fichier genere par l'extension
+.calendar.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Tests
+.vscode-test/
+coverage/

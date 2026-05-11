@@ -1,0 +1,157 @@
+{
+  "name": "calendar",
+  "displayName": "Calendar",
+  "description": "Scans your workspace for TODO, FIXME, BUG, HACK and NOTE annotations. TreeView sidebar, editor decorations, CodeLens, assignees, and Markdown export.",
+  "version": "1.0.0",
+  "publisher": "teddybecard",
+  "author": {
+    "name": "Teddy Becard",
+    "email": "teddybecard0@gmail.com",
+    "url": "https://github.com/TeddyDARKVADOR"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/TeddyDARKVADOR/Calendar#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TeddyDARKVADOR/Calendar"
+  },
+  "bugs": {
+    "url": "https://github.com/TeddyDARKVADOR/Calendar/issues"
+  },
+  "keywords": [
+    "todo",
+    "tasks",
+    "annotations",
+    "fixme",
+    "bug",
+    "codelens",
+    "decorations",
+    "calendar",
+    "productivity"
+  ],
+  "icon": "resources/icon.png",
+  "galleryBanner": {
+    "color": "#1a2332",
+    "theme": "dark"
+  },
+  "categories": ["Other"],
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "main": "./extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "calendar.generate",
+        "title": "Calendar: Generer le fichier de taches",
+        "icon": "$(export)"
+      },
+      {
+        "command": "calendar.refresh",
+        "title": "Calendar: Rafraichir",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "calendar.filter",
+        "title": "Calendar: Filtrer les annotations",
+        "icon": "$(search)"
+      },
+      {
+        "command": "calendar.clearFilter",
+        "title": "Calendar: Effacer le filtre",
+        "icon": "$(search-stop)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "calendarContainer",
+          "title": "Calendar",
+          "icon": "resources/calendar.svg"
+        }
+      ]
+    },
+    "views": {
+      "calendarContainer": [
+        {
+          "id": "calendarView",
+          "name": "Taches",
+          "icon": "resources/calendar.svg"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "calendar.filter",
+          "when": "view == calendarView",
+          "group": "navigation"
+        },
+        {
+          "command": "calendar.clearFilter",
+          "when": "view == calendarView && calendar.filterActive",
+          "group": "navigation"
+        },
+        {
+          "command": "calendar.refresh",
+          "when": "view == calendarView",
+          "group": "navigation"
+        },
+        {
+          "command": "calendar.generate",
+          "when": "view == calendarView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Calendar",
+      "properties": {
+        "calendar.outputFile": {
+          "type": "string",
+          "default": ".calendar.md",
+          "description": "Nom du fichier Markdown genere a la racine du workspace."
+        },
+        "calendar.annotations": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["TODO", "FIXME", "BUG", "HACK", "NOTE"],
+          "description": "Types d'annotations a detecter dans le code source."
+        },
+        "calendar.excludePatterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["**/node_modules/**", "**/.git/**", "**/dist/**", "**/build/**"],
+          "description": "Patterns glob des dossiers et fichiers a exclure du scan."
+        },
+        "calendar.autoRefresh": {
+          "type": "boolean",
+          "default": false,
+          "description": "Rafraichit automatiquement la vue a chaque sauvegarde de fichier."
+        },
+        "calendar.showCodeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Affiche un lien CodeLens cliquable au-dessus de chaque annotation dans l'editeur."
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "calendar.generate",
+        "key": "ctrl+alt+c",
+        "mac": "cmd+alt+c",
+        "when": "workspaceFolderCount > 0"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.9.3"
+  }
+}
